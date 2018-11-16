@@ -1,0 +1,22 @@
+[Unit]
+Description=uPnP daemon 
+After=network.target
+ConditionPathExists=!/etc/upnp/upnpd_not_to_be_run
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/sbin/upnpd eth0 eth0
+ExecReload=/usr/sbin/upnpd eth0 eth0
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+RestartPreventExitStatus=255
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
+Alias=upnpd.service
+
+
